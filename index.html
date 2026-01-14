@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Classes</title>
+<link rel="icon" type="image/png" href="icom.png">
+<link href="https://fonts.googleapis.com/css2?family=BBH+Bartle:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+
+.search-clear {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255,255,255,0.6);
+  font-size: 1.3em;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+}
+.search-input:not(:placeholder-shown) + .search-clear {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+document.getElementById('clearSearch').onclick = () => {
+  searchInput.value = '';
+  searchInput.focus();
+  searchInput.dispatchEvent(new Event('input'));
+};
+
+.search-wrapper {
+  position: relative;
+  width: 220px;
+<span class="search-clear" id="clearSearch">×</span>
+}
+
+.search-input {
+  width: 100%;
+  padding: 8px 12px 8px 36px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(10px);
+  color: var(--text);
+  font-size: 0.9em;
+  outline: none;
+  transition: all 0.25s;
+}
+
+.search-input::placeholder {
+  color: rgba(255,255,255,0.4);
+}
+
+.search-input:focus {
+  background: rgba(0,0,0,0.6);
+  box-shadow: 0 0 0 2px var(--accent);
+  width: 260px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.1em;
+  color: rgba(255,255,255,0.5);
+  pointer-events: none;
+}
+/* ================= THEME VARIABLES ================= */
+:root {
+  /* Default Blue */
+  --text: #8fc9ff; --accent: #3fb7ff; --glow: rgba(63, 183, 255, 0.7);
+  --bg-top: #5fa2e6; --bg-mid: #2f69b8; --bg-low: #0b2a55; --bg-bottom: #020611;
+  --panel-bg: rgba(6, 24, 50, 0.85);
+}
+
+[data-theme="dark"] {
+  --text: #e0e0e0; --accent: #ffffff; --glow: rgba(255, 255, 255, 0.3);
+  --bg-top: #404040; --bg-mid: #262626; --bg-low: #1a1a1a; --bg-bottom: #0a0a0a;
+  --panel-bg: rgba(20, 20, 20, 0.9);
+}
+
+[data-theme="classic"] {
+  --text: #e0afff; --accent: #a855f7; --glow: rgba(168, 85, 247, 0.7);
+  --bg-top: #4a148c; --bg-mid: #311b92; --bg-low: #1a0633; --bg-bottom: #05010a;
+  --panel-bg: rgba(15, 5, 25, 0.9);
+}
+
+[data-theme="orange"] {
+  --text: #ffcc80; --accent: #ff9800; --glow: rgba(255, 152, 0, 0.7);
+  --bg-top: #fb8c00; --bg-mid: #ef6c00; --bg-low: #3e2723; --bg-bottom: #1a0a00;
+  --panel-bg: rgba(45, 20, 0, 0.85);
+}
+
+[data-theme="gold"] {
+  --text: #fff176; --accent: #ffd700; --glow: rgba(255, 215, 0, 0.6);
+  --bg-top: #c5a000; --bg-mid: #8c7300; --bg-low: #2b2500; --bg-bottom: #0d0c00;
+  --panel-bg: rgba(30, 25, 0, 0.9);
+}
+
+[data-theme="crimson"] {
+  --text: #ff8a80; --accent: #ff1744; --glow: rgba(255, 23, 68, 0.7);
+  --bg-top: #b71c1c; --bg-mid: #7f0000; --bg-low: #210000; --bg-bottom: #0a0000;
+  --panel-bg: rgba(40, 0, 0, 0.9);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; font-family:'BBH Bartle',sans-serif;
+  color:var(--text); overflow:hidden; transition: color 0.5s;
+}
+
+[data-theme="emerald"] {
+  --text: #b0ffb0;
+  --accent: #00c853;
+  --glow: rgba(0,200,83,0.7);
+  --bg-top: #004d40;
+  --bg-mid: #00695c;
+  --bg-low: #00796b;
+  --bg-bottom: #00251a;
+  --panel-bg: rgba(0,50,30,0.85);
+}
+
+[data-theme="midnight"] {
+  --text: #cfd8dc;
+  --accent: #37474f;
+  --glow: rgba(55,71,79,0.6);
+  --bg-top: #000010;
+  --bg-mid: #000033;
+  --bg-low: #000066;
+  --bg-bottom: #000000;
+  --panel-bg: rgba(5,10,20,0.85);
+}
+
+[data-theme="sunrise"] {
+  --text: #ffe4c4;
+  --accent: #ff6f00;
+  --glow: rgba(255,111,0,0.6);
+  --bg-top: #fff3e0;
+  --bg-mid: #ffcc80;
+  --bg-low: #ff8f00;
+  --bg-bottom: #662200;
+  --panel-bg: rgba(60,20,0,0.85);
+}
+
+[data-theme="storm"] {
+  --text: #a8dadc;
+  --accent: #457b9d;
+  --glow: rgba(69,123,157,0.6);
+  --bg-top: #1d3557;
+  --bg-mid: #2a4d69;
+  --bg-low: #457b9d;
+  --bg-bottom: #1a2634;
+  --panel-bg: rgba(20,30,50,0.85);
+}
+
+[data-theme="lavender"] {
+  --text: #e6e6fa;
+  --accent: #9370db;
+  --glow: rgba(147,112,219,0.7);
+  --bg-top: #6a5acd;
+  --bg-mid: #7b68ee;
+  --bg-low: #8a2be2;
+  --bg-bottom: #2e0854;
+  --panel-bg: rgba(50,10,70,0.85);
+}
+
+[data-theme="peach"] {
+  --text: #ffd1b3;
+  --accent: #ff7043;
+  --glow: rgba(255,112,67,0.6);
+  --bg-top: #ffe0cc;
+  --bg-mid: #ffb380;
+  --bg-low: #ff7043;
+  --bg-bottom: #662200;
+  --panel-bg: rgba(60,20,10,0.85);
+}
+
+[data-theme="iceberg"] {
+  --text: #d0f0ff;
+  --accent: #00bfff;
+  --glow: rgba(0,191,255,0.6);
+  --bg-top: #e0f7ff;
+  --bg-mid: #80dfff;
+  --bg-low: #00bfff;
+  --bg-bottom: #001f33;
+  --panel-bg: rgba(0,40,70,0.85);
+}
+
+[data-theme="copper"] {
+  --text: #ffb380;
+  --accent: #ff6f00;
+  --glow: rgba(255,111,0,0.6);
+  --bg-top: #4e342e;
+  --bg-mid: #6d4c41;
+  --bg-low: #8d6e63;
+  --bg-bottom: #3e1f0f;
+  --panel-bg: rgba(60,30,15,0.85);
+}
+
+[data-theme="berry"] {
+  --text: #ffb3c6;
+  --accent: #d81b60;
+  --glow: rgba(216,27,96,0.7);
+  --bg-top: #880e4f;
+  --bg-mid: #ad1457;
+  --bg-low: #c2185b;
+  --bg-bottom: #33001a;
+  --panel-bg: rgba(50,10,30,0.85);
+}
+
+[data-theme="mint"] {
+  --text: #b3ffcc;
+  --accent: #00c853;
+  --glow: rgba(0,200,83,0.6);
+  --bg-top: #004d40;
+  --bg-mid: #00796b;
+  --bg-low: #009688;
+  --bg-bottom: #00251a;
+  --panel-bg: rgba(10,50,30,0.85);
+}
+
+
+
+body::before, body::after{ content:''; position:fixed; inset:0; z-index:-2; }
+body::before{
+  background:
+    radial-gradient(circle at 50% 12%, rgba(255,255,255,0.1), transparent 55%),
+    linear-gradient(180deg, var(--bg-top) 0%, var(--bg-mid) 30%, var(--bg-low) 65%, var(--bg-bottom) 100%);
+  transition: background 0.8s ease;
+}
+body::after{ background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,0.8)); }
+
+.splash{ position:fixed; left:80px; top:132px; font-size:.9em; opacity:.9; letter-spacing:.15em; animation:glow 3s ease-in-out infinite alternate; }
+@keyframes glow{ from{text-shadow:0 0 8px var(--glow)} to{text-shadow:0 0 20px var(--accent)} }
+
+.tabs{ position:fixed; top:58px; right:28px; display:flex; gap:10px; z-index:20; }
+.tab-btn{ padding:8px 18px; border-radius:14px; background:rgba(0,0,0,0.4); backdrop-filter:blur(12px); font-size:.8em; cursor:pointer; transition:.35s; }
+.tab-btn.active{ background: var(--glow); box-shadow:0 0 25px var(--glow); color: #fff; }
+
+.view{ position:absolute; inset:0; opacity:0; pointer-events:none; transform:translateY(20px); transition:.5s cubic-bezier(.2,.8,.2,1); }
+.view.active{ opacity:1; pointer-events:auto; transform:none; }
+
+.category-container { position: absolute; top: 220px; left: 0; width: 100%; display: flex; justify-content: center; gap: 20px; z-index: 5; }
+.cat-card { padding: 10px 25px; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; cursor: pointer; transition: 0.3s; font-size: 0.8em; }
+.cat-card.active { background: var(--accent); color: #000; font-weight: bold; box-shadow: 0 0 20px var(--accent); }
+
+.game-grid{ position:absolute; bottom:150px; left:0; display:flex; gap:40px; padding:0 50vw; transition:transform 0.6s cubic-bezier(.2,.8,.2,1); }
+.game-card{ width:180px; height:180px; border-radius:26px; overflow:hidden; background:#000; cursor:pointer; transition:.5s; position:relative; flex-shrink: 0; }
+.game-card.selected{ transform:scale(1.3); box-shadow:0 0 55px var(--accent); }
+.game-card img{ width:100%; height:100%; object-fit:cover; }
+<div class="game-desc-panel" id="gameDesc">
+  <div class="game-desc-title" id="descTitle"></div>
+  <div class="game-desc-text" id="descText"></div>
+</div>
+.game-desc-panel {
+  position: fixed;
+  top: 50%;
+  right: 40px;
+  transform: translateY(-50%);
+  width: 320px;
+  max-height: 70vh;
+  padding: 20px;
+  background: var(--panel-bg);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 18px;
+  color: var(--text);
+  font-family: 'BBH Bartle', sans-serif;
+  font-size: 0.95em;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  z-index: 15;
+  overflow-y: auto;
+}
+
+.game-desc-panel.show {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+  pointer-events: auto;
+}
+
+.game-desc-title {
+  font-size: 1.3em;
+  margin-bottom: 12px;
+  color: var(--accent);
+  text-shadow: 0 0 10px var(--glow);
+}
+
+.game-desc-text {
+  line-height: 1.45;
+  opacity: 0.9;
+}
+
+.game-desc-empty {
+  text-align: center;
+  opacity: 0.6;
+  font-style: italic;
+  padding: 40px 0;
+}
+.settings-panel{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:460px; padding:30px; border-radius:26px; background: var(--panel-bg); backdrop-filter:blur(18px); box-shadow:0 30px 80px rgba(0,0,0,0.8), 0 0 40px var(--glow); transition: 0.5s; }
+.setting{ display:flex; justify-content:space-between; align-items: center; padding:14px 0; border-bottom:1px solid rgba(255,255,255,.1); }
+.toggle{ width:54px; height:28px; border-radius:20px; background:rgba(0,0,0,0.3); position:relative; cursor:pointer; }
+.toggle::after{ content:''; position:absolute; top:4px; left:4px; width:20px; height:20px; border-radius:50%; background: #fff; transition:.3s; }
+.toggle.on{ background: var(--accent); }
+.toggle.on::after{ left:30px; }
+
+.theme-picker { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; max-width: 200px; }
+.theme-dot { width: 22px; height: 22px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: 0.2s; }
+.theme-dot.active { border-color: #fff; transform: scale(1.2); }
+.dot-blue { background: #3fb7ff; }
+.dot-dark { background: #404040; }
+.dot-classic { background: #a855f7; }
+.dot-orange { background: #ff9800; }
+.dot-gold { background: #ffd700; }
+.dot-crimson { background: #ff1744; }
+.dot-emerald { background: #00c853; }
+.dot-midnight { background: #37474f; }
+.dot-sunrise { background: #ff6f00; }
+.dot-storm { background: #457b9d; }
+.dot-lavender { background: #9370db; }
+.dot-peach { background: #ff7043; }
+.dot-iceberg { background: #00bfff; }
+.dot-copper { background: #ff6f00; }
+.dot-berry { background: #d81b60; }
+.dot-mint { background: #00c853; }
+
+
+.blood-flag{ position:absolute; top:8px; right:8px; width:26px; height:26px; border-radius:50%; background:rgba(10,10,10,.7); border:2px solid #ff3b3b; display:flex; align-items:center; justify-content:center; font-size:14px; box-shadow:0 0 14px rgba(255,60,60,.8); pointer-events:none; }
+.topbar{ position:fixed; inset:0 0 auto 0; height:50px; display:flex; justify-content:space-between; align-items:center; padding:0 28px; font-size:.8em; background:linear-gradient(180deg,rgba(0,0,0,0.3),transparent); z-index:10; }
+.site-title{ position:fixed; left:80px; top:88px; font-size:1.9em; text-shadow:0 0 22px var(--glow); }
+.info{ position:fixed; left:50%; bottom:22px; transform:translateX(-50%); padding:14px 32px; background:rgba(0,0,0,0.5); border-radius:18px; opacity:0; transition:.4s; }
+.info.show{opacity:1}
+footer{ position:fixed; bottom:10px; right:16px; font-size:.7em; opacity:.5; }
+.fade-overlay{ position:fixed; inset:0; background:#000; opacity:0; pointer-events:none; transition:opacity .55s; z-index:999; }
+.fade-overlay.active{opacity:1}
+
+.game-card .playtime {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(6px);
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.75em;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.35s, transform 0.35s;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.5);
+}
+
+.game-card:hover .playtime,
+.game-card.selected .playtime {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-4px);
+}
+
+/* Tiny glow on selected */
+.game-card.selected .playtime {
+  box-shadow: 0 0 12px var(--accent);
+}
+</style>
+</head>
+<body>
+
+
+<audio id="moveSound" src="move.mp3"></audio>
+<audio id="selectSound" src="select.mp3"></audio>
+<audio id="bgm" src="bgm.mp3" loop></audio>
+
+<div class="fade-overlay" id="fade"></div>
+
+<div class="topbar">
+  <div id="day"></div>
+  <div id="time"></div>
+</div>
+
+<div class="tabs">
+  <div class="search-wrapper">
+    <span class="search-icon">⌕</span>
+    <input 
+      type="text" 
+      class="search-input" 
+      id="searchInput" 
+      placeholder="Search games..." 
+      autocomplete="off"
+    >
+  </div>
+
+  <div class="tab-btn active" data-tab="games">GAMES</div>
+  <div class="tab-btn" data-tab="settings">SETTINGS</div>
+</div>
+
+<div class="site-title">Astatine</div>
+<div class="splash" id="splashText"></div>
+
+<div class="view active" id="gamesView">
+  <div class="category-container" id="categoryBar">
+      <div class="cat-card active" data-cat="All">ALL</div>
+      <div class="cat-card" data-cat="Action">ACTION</div>
+      <div class="cat-card" data-cat="Horror">HORROR</div>
+      <div class="cat-card" data-cat="Sports">SPORTS</div>
+      <div class="cat-card" data-cat="Casual">CASUAL</div>
+      <div class="cat-card" data-cat="Emulators">EMULATORS</div>
+      <div class="cat-card" data-cat="Music">MUSIC</div>
+  </div>
+  <div class="game-grid" id="gameGrid"></div>
+  <div class="info" id="infoPanel"><div id="infoTitle"></div></div>
+</div>
+
+<div class="view" id="settingsView">
+  <div class="settings-panel">
+    <div class="setting">
+        <span>Theme</span>
+        <div class="theme-picker">
+            <div class="theme-dot dot-blue active" data-theme="blue"></div>
+            <div class="theme-dot dot-dark" data-theme="dark"></div>
+            <div class="theme-dot dot-classic" data-theme="classic"></div>
+            <div class="theme-dot dot-orange" data-theme="orange"></div>
+            <div class="theme-dot dot-gold" data-theme="gold"></div>
+            <div class="theme-dot dot-crimson" data-theme="crimson"></div>
+<div class="theme-dot dot-emerald" data-theme="emerald"></div>
+<div class="theme-dot dot-midnight" data-theme="midnight"></div>
+<div class="theme-dot dot-sunrise" data-theme="sunrise"></div>
+<div class="theme-dot dot-storm" data-theme="storm"></div>
+<div class="theme-dot dot-lavender" data-theme="lavender"></div>
+<div class="theme-dot dot-peach" data-theme="peach"></div>
+<div class="theme-dot dot-iceberg" data-theme="iceberg"></div>
+<div class="theme-dot dot-copper" data-theme="copper"></div>
+<div class="theme-dot dot-berry" data-theme="berry"></div>
+<div class="theme-dot dot-mint" data-theme="mint"></div>
+
+        </div>
+    </div>
+    <div class="setting"><span>Sound Effects</span><div class="toggle on" id="sfxToggle"></div></div>
+    <div class="setting"><span>Background Music</span><div class="toggle on" id="bgmToggle"></div></div>
+  </div>
+</div>
+
+<footer>crtdxrt — 2025</footer>
+
+<script>
+
+// Get saved playtime (in seconds)
+function getPlaytime(link) {
+  const times = JSON.parse(localStorage.getItem('gamePlaytimes') || '{}');
+  return times[link] || 0;
+}
+
+// Format seconds → "2h 14m" or "47m" or "<1m"
+function formatPlaytime(link) {
+  const seconds = getPlaytime(link);
+  if (seconds < 60) return "<1m";
+  if (seconds < 3600) return `${Math.floor(seconds / 60)}m`;
+  const hours = Math.floor(seconds / 3600);
+  const mins = Math.floor((seconds % 3600) / 60);
+  return mins === 0 ? `${hours}h` : `${hours}h ${mins}m`;
+}
+let sfxEnabled=true, bgmEnabled=true, bgmStarted=false;
+let index=0, launching=false;
+let currentFilter = 'All';
+
+const setTheme = (themeName) => {
+    document.documentElement.setAttribute('data-theme', themeName);
+    localStorage.setItem('astatine-theme', themeName);
+    document.querySelectorAll('.theme-dot').forEach(dot => {
+        dot.classList.toggle('active', dot.dataset.theme === themeName);
+    });
+};
+
+const savedTheme = localStorage.getItem('astatine-theme') || 'blue';
+setTheme(savedTheme);
+
+document.querySelectorAll('.theme-dot').forEach(dot => {
+    dot.onclick = () => { playMove(); setTheme(dot.dataset.theme); };
+});
+
+const moveSound=document.getElementById('moveSound');
+const selectSound=document.getElementById('selectSound');
+const bgm=document.getElementById('bgm');
+const fade=document.getElementById('fade');
+
+function playMove(){if(sfxEnabled){moveSound.currentTime=0;moveSound.play()}}
+function playSelect(){if(sfxEnabled){selectSound.currentTime=0;selectSound.play()}}
+function startBGM(){if(bgmEnabled&&!bgmStarted){bgm.volume=.4;bgm.play();bgmStarted=true}}
+
+['mousedown','keydown','touchstart'].forEach(e=>{
+  addEventListener(e,()=>startBGM(),{once:true});
+});
+
+setInterval(()=>{
+  const d=new Date();
+  time.textContent=d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+  day.textContent=d.toLocaleDateString([], {weekday:'long'});
+},1000);
+
+document.querySelectorAll('.tab-btn').forEach(b=>{
+  b.onclick=()=>{
+    playMove();
+    document.querySelectorAll('.tab-btn,.view').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    document.getElementById(b.dataset.tab+'View').classList.add('active');
+  };
+});
+
+sfxToggle.onclick=()=>sfxToggle.classList.toggle('on',sfxEnabled=!sfxEnabled);
+bgmToggle.onclick=()=>{
+  bgmEnabled=!bgmEnabled;
+  bgmToggle.classList.toggle('on',bgmEnabled);
+  if(!bgmEnabled){bgm.pause();bgmStarted=false}else startBGM();
+};
+
+const games=[
+  { name:'Among Us', img:'amongus/amogus.png', link:'amongus/amongus.html', cat:'Casual' },
+  { name:'Andys Apple Farm', img:'aaf/aaf.png', link:'aaf/aaf.html', cat:'Horror' },
+  { name:'Backrooms', img:'backrooms/brooms.png', link:'backrooms/backrooms.html', cat:'Horror' },
+  { name:'Baldis Basics Classic Remastered', img:'baldiremaster/bbcr.png', link:'baldiremaster/baldiremaster.html', cat:'Horror' },
+  { name:'Baldis Basics Plus', img:'baldiplus/bbplus.png', link:'baldiplus/baldiplus.html', cat:'Horror' },
+  { name:'Basketball Stars', img:'baskstars/bstars.png', link:'baskstars/baskstars.html', cat:'Sports' },
+  { name:'Bendy and the Ink Machine', img:'bendy/batim.png', link:'bendy/bendy.html', cat:'Horror' },
+  { name:'Bitlife', img:'bitlife/bitlife.png', link:'bitlife/bitlife.html', cat:'Casual' },
+  { name:'Block Blast - who plays ts 🥀💔', img:'blockblast/bbla.png', link:'blockblast/blockblast.html', cat:'Casual' },
+  { name:'Boxing Random', img:'boxrando/boxrando.png', link:'boxrando/boxrando.html', cat:'Sports' },
+  { name:'Clash Royale', img:'clash/clash.png', link:'clash/clash.html', cat:'Action' },
+  { name:'Cookie Clicker', img:'cclicker/cclicker.png', link:'cclicker/cclicker.html', cat:'Casual' },
+  { name:'CrazyCattle3D aka Peak', img:'holypeak/ccaddle.png', link:'holypeak/holypeak.html', cat:'Action' },
+  { name:'Crossy Road', img:'crossyroad/crossyroad.png', link:'crossyroad/crossyroad.html', cat:'Casual' },
+  { name:'Cuphead', img:'cuphead/cuphead.png', link:'cuphead/cuphead.html', cat:'Action' },
+  { name:'Deltarune', img:'deltarune/deltarune.png', link:'deltarune/deltarune.html', cat:'Action' },
+  { name:'Doge Miner', img:'dogeminer/dm.png', link:'dogeminer/dm.html', cat:'Casual' },
+  { name:'Doodle Baseball', img:'gbaseball/gbaseball.png', link:'gbaseball/gbaseball.html', cat:'Sports' },
+  { name:'Doodle Jump', img:'doodlejump/doodlej.png', link:'doodlejump/doodlej.html', cat:'Casual' },
+  { name:'Drive Mad', img:'drivemad/drivemad.png', link:'drivemad/drivemad.html', cat:'Sports' },
+  { name:'DXRT Flash Emulator', img:'dxrtemu/dxrt-emu.png', link:'dxrtemu/dxrtemu.html', cat:'Emulators' },
+  { name:'Eaglercraft Launcher', img:'eaglercraft1.12/eag1.12.png', link:'mclauncher.html', cat:'Action' },
+  { name:'Fancypants Adventure', img:'fancypants/fancypants1.png', link:'fancypants/fancypants.html', cat:'Action' },
+  { name:'Fancypants Adventure 2', img:'fpants2/fpants2.png', link:'fpants2/fpants2.html', cat:'Action' },
+  { name:'Fancypants Adventure 3', img:'fpants3/fpants3.png', link:'fpants3/fpants3.html', cat:'Action' },
+  { name:'Fears to Fathom : Home Alone', img:'f2f/ff2f.png', link:'f2f/f2f.html', cat:'Horror' },
+  { name:'Fireboy & Watergirl', img:'fireb/fireb.png', link:'fireb/fireb.html', cat:'Casual' },
+  { name:'FNAF World', img:'fnafworld/fnafworld.png', link:'fnafworld/fnafworld.html', cat:'Action' },
+  { name:'FNAF1', img:'fnaf1/fnaf1.png', link:'fnaf1/fnaf1.html', cat:'Horror' },
+  { name:'FNAF2', img:'fnaf2/fnaf2.png', link:'fnaf2/fnaf2.html', cat:'Horror' },
+  { name:'FNAF3', img:'fnaf3/fnaf3.png', link:'fnaf3/fnaf3.html', cat:'Horror' },
+  { name:'FNAF4', img:'fnaf4/fnaf4.png', link:'fnaf4/fnaf4.html', cat:'Horror' },
+  { name:'FNAF5 - SL', img:'sl/sl.png', link:'sl/sl.html', cat:'Horror' },
+  { name:'Football Bros', img:'fb/fb.png', link:'fb/fb.html', cat:'Sports' },
+  { name:'Fork and Sausage', img:'fas/fas.png', link:'fas/fas.html', cat:'Casual' },
+  { name:'Friday Night Funkin', img:'fnf/fnf.png', link:'fnf/fnf.html', cat:'Music' },
+  { name:'Geometry Dash Lite', img:'geomdashlite/geomdashlite.png', link:'geomdashlite/geomdashlite.html', cat:'Music' },
+  { name:'Gimme the AirPod', img:'gimme/gimme.png', link:'gimme/gimme.html', cat:'Casual' },
+  { name:'Granny', img:'granny/granny.png', link:'granny/granny.html', cat:'Horror' },
+  { name:'Grow a Garden', img:'gag/gag.png', link:'gag/gag.html', cat:'Casual' },
+  { name:'Gun Mayhem', img:'gunmay/gm.png', link:'gunmay/gm.html', cat:'Action' },
+  { name:'Gun Mayhem 2', img:'gunmay2/gm2.png', link:'gunmay2/gm2.html', cat:'Action' },
+  { name:'Half Life', img:'hl/hl.png', link:'hl/hl.html', cat:'Action' },
+  { name:'Happy Wheels', img:'hw/hw.png', link:'hw/hw.html', blood:true, cat:'Action' },
+  { name:'Henry Stickmin - Breaking the Bank', img:'btb/btb.png', link:'btb/btb.html', cat:'Casual' },
+  { name:'Henry Stickmin: Escaping the Prison', img:'etp/etp.png', link:'etp/etp.html', cat:'Casual' },
+  { name:'Henry Stickmin: Fleeing the Complex', img:'ftc/ftc.png', link:'ftc/ftc.html', cat:'Casual' },
+  { name:'Hill Climb Racing', img:'hillclimb/hillc.png', link:'hillclimb/hillc.html', cat:'Sports' },
+  { name:'hole.io', img:'holeio/holeio.png', link:'holeio/holeio.html', cat:'Casual' },
+  { name:'Idle Breakout', img:'idle/idle.png', link:'idle/idle.html', cat:'Casual' },
+  { name:'Mike Tysons Punch-Out!!', img:'mtpo/mtpo.png', link:'mtpo/mtpo.html', cat:'Sports' },
+  { name:'Monster Tracks', img:'mtracks/mtracks.png', link:'mtracks/mtracks.html', cat:'Sports' },
+  { name:'Moto 3XM', img:'m3x/m3x.png', link:'m3x/m3x.html', cat:'Sports' },
+  { name:'OvO', img:'ovo/ovo.png', link:'ovo/ovo.html', cat:'Action' },
+  { name:'Papas Pizzeria', img:'papapizzeria/papapizzeria.png', link:'papapizzeria/papapizzeria.html', cat:'Casual' },
+  { name:'PaRappa the Rapper', img:'ptr/parappa.png', link:'ptr/parappa.html', cat:'Music' },
+{ name:'Ruffle', img:'re/re.png', link:'re/re.html', cat:'Emulators' },
+{ name:'Wordle', img:'w/w.png', link:'w/w.html', cat:'Casual' },
+{ name:'We Become What We Behold', img:'wb/wb.png', link:'wb/wb.html', cat:'Casual' },
+{ name:'EmulatorJS', img:'emjs/emjs.png', link:'emjs/emjs.html', cat:'Emulators' },
+  { name:'People Playground', img:'pplplayground/pplplayground.png', link:'pplplayground/pplplayground.html', blood:true, cat:'Action' },
+  { name:'Slope', img:'slope/slope.png', link:'slope/slope.html', cat:'Action' },
+  { name:'Subway Surfers', img:'subsurf/ss.png', link:'subsurf/subsurf.html', cat:'Casual' },
+  { name:'Time Shooter 3', img:'ts3/ts3.png', link:'ts3/ts3.html', cat:'Action' },
+ { name:'Slope 2', img:'slope2/s2.png', link:'slope2/s2.html', cat:'Action' },
+ { name:'Duke Nukem 3D', img:'duke3d/duke3d.png', link:'duke3d/duke3d.html', blood:true, cat:'Action' },
+ {name:'Slope 3', img:'slope3/s3.png', link:'slope3/s3.html', cat:'Action' },
+{name:'Tomb of the Mask', img:'totm/totm.png', link:'totm/totm.html', cat:'Action' },
+{name:'Duck Hunt', img:'duckhunt/duckhunt.png', link:'duckhunt/duckhunt.html', cat:'Action' },
+].sort((a,b)=>a.name.localeCompare(b.name));
+
+let filteredGames = [...games];
+const grid=document.getElementById('gameGrid');
+const infoTitle=document.getElementById('infoTitle');
+const info=document.getElementById('infoPanel');
+
+function renderGames() {
+    grid.innerHTML = '';
+    // Reset grid position visually and logically before rendering new cards
+    grid._x = 0;
+    grid.style.transform = `translateX(0px)`;
+    
+    filteredGames.forEach((g,i)=>{
+      const c=document.createElement('div');
+      c.className='game-card';
+      c.innerHTML = `
+  <img src="${g.img}">
+  ${g.blood ? '<div class="blood-flag">🩸</div>' : ''}
+  <div class="playtime" data-link="${g.link}">${formatPlaytime(g.link)}</div>
+`;
+      c.onclick=()=>{startBGM();playSelect();index=i;update();launch()};
+      grid.appendChild(c);
+    });
+    
+    index = 0; 
+    // Ensure DOM is ready before centering the first game
+    requestAnimationFrame(() => {
+        update(true); 
+    });
+}
+
+function update(isReset = false){
+  if(filteredGames.length === 0) return;
+  [...grid.children].forEach(c=>c.classList.remove('selected'));
+  const card=grid.children[index];
+  if(!card) return;
+
+  card.classList.add('selected');
+  const r=card.getBoundingClientRect();
+  
+  // Logic to handle centering specifically for a reset or category switch
+  const currentX = isReset ? 0 : (grid._x || 0);
+  const x = currentX - ((r.left + r.width / 2) - (innerWidth / 2));
+  
+  grid.style.transform = `translateX(${x}px)`;
+  grid._x = x;
+  infoTitle.textContent = filteredGames[index].name;
+  info.classList.add('show');
+}
+
+document.querySelectorAll('.cat-card').forEach(card => {
+    card.onclick = () => {
+        playMove();
+        document.querySelectorAll('.cat-card').forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+        currentFilter = card.dataset.cat;
+        filteredGames = currentFilter === 'All' ? [...games] : games.filter(g => g.cat === currentFilter);
+        splashText.textContent = `${filteredGames.length} GAMES IN ${currentFilter.toUpperCase()}`;
+        renderGames();
+    };
+});
+
+function launch() {
+  if (launching || filteredGames.length === 0) return;
+  launching = true;
+
+  const selectedGame = filteredGames[index];
+  const link = selectedGame.link;
+
+  // Update playtime
+  const times = JSON.parse(localStorage.getItem('gamePlaytimes') || '{}');
+  times[link] = (times[link] || 0) + 1; // +1 second per launch (simple version)
+  localStorage.setItem('gamePlaytimes', JSON.stringify(times));
+
+  // Optional: more realistic tracking (uncomment if you want)
+  // You could also increment every few seconds while the game tab is open, but it's more complex
+
+  fade.classList.add('active');
+  setTimeout(() => {
+    location.href = link;
+  }, 550);
+}
+
+addEventListener('keydown',e=>{
+  if(!gamesView.classList.contains('active')) return;
+  if(e.key==='ArrowRight'){playMove();index=Math.min(index+1,filteredGames.length-1);update()}
+  if(e.key==='ArrowLeft'){playMove();index=Math.max(index-1,0);update()}
+  if(e.key==='Enter'){playSelect();launch()}
+});
+
+splashText.textContent=`${games.length} GAMES AVAILABLE`;
+renderGames();
+addEventListener('resize', () => update(false));
+
+const searchInput = document.getElementById('searchInput');
+
+searchInput.addEventListener('input', (e) => {
+  const term = e.target.value.toLowerCase().trim();
+  
+  if (term === '') {
+    filteredGames = currentFilter === 'All' 
+      ? [...games] 
+      : games.filter(g => g.cat === currentFilter);
+  } else {
+    filteredGames = games.filter(g => 
+      g.name.toLowerCase().includes(term)
+    );
+  }
+
+  splashText.textContent = term 
+    ? `${filteredGames.length} RESULTS FOR "${term}"`
+    : `${filteredGames.length} GAMES IN ${currentFilter.toUpperCase()}`;
+
+  renderGames();
+});
+
+// Optional: clear search when switching tabs or categories
+document.querySelectorAll('.tab-btn, .cat-card').forEach(el => {
+  el.addEventListener('click', () => {
+    if (searchInput.value) {
+      searchInput.value = '';
+      searchInput.dispatchEvent(new Event('input'));
+    }
+  });
+});
+</script>
+</body>
+</html>
